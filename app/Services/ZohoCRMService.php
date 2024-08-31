@@ -150,7 +150,7 @@ class ZohoCRMService
     }
 
 
-    
+
     /**
      * @return array
      */
@@ -176,9 +176,9 @@ class ZohoCRMService
 
         $url = 'https://content.zohoapis.com/crm/v6/upload';
         $header_crm = $this->headersUpload();
-        $fileName = 'tiny2.zip';
+        $fileName = 'bigtiny.zip';
         $relativeFilePath = 'public/touploadcrm/' . $fileName; // Ruta relativa dentro de storage/app/public/
-        $absoluteFilePath = storage_path('app/' . $relativeFilePath); // Ruta absoluta para acceder al archivo      
+        $absoluteFilePath = storage_path('app/' . $relativeFilePath); // Ruta absoluta para acceder al archivo
         //$fields["file"] = fopen($absoluteFilePath, 'rb');
             try {
                 $response =  $this->client->request('POST', $url, [
@@ -191,7 +191,7 @@ class ZohoCRMService
                         ],
                     ],
                 ]);
-    
+
                     $responseBody = $response->getBody()->getContents();
                     $responseData = json_decode($responseBody, true);
                     if (isset($responseData['code']) && $responseData['code'] === 'FILE_UPLOAD_SUCCESS') {
@@ -200,13 +200,13 @@ class ZohoCRMService
                     } else {
                         echo "File upload failed.";
                     }
-            } catch (\Exception $e) {      
+            } catch (\Exception $e) {
 
                 return response()->json(['error' => $e->getMessage()], 500);
             }
-                
+
             try {
-                
+
                 $zohoApiUrl = 'https://www.zohoapis.com/crm/bulk/v6/write';
                 $jobData = [
                     "operation" => "insert",
@@ -224,32 +224,45 @@ class ZohoCRMService
                             "file_id" => $fileId,
                             "field_mappings" => [
                                 [
-                                    "api_name" => "Product_Name",
+                                    "api_name" => "Product_Code",
                                     "index" => 0
+                                ],
+                                [
+                                    "api_name" => "Unit_Of_Measure",
+                                    "index" => 2
+                                ],
+                                [
+                                    "api_name" => "Product_Name",
+                                    "index" => 3
+                                ],
+                                [
+                                    "api_name" => "bigcommerce_json",
+                                    "index" => 4
                                 ]
                             ]
                         ]
                     ]
                 ];
-                $header = $this->headers();       
+                $header = $this->headers();
                 $accessToken = $this->zohoOAuthService->getAccessToken()->access_token;
                 $response = $this->client->request('POST', $zohoApiUrl, [
                     'headers' => $header,
                     'json' => $jobData
                 ]);
-               
+
             $responseBodyInsert = $response->getBody()->getContents();
             $responseData = json_decode($responseBodyInsert, true);
-            dd($responseData);
+            var_dump($responseData );
+            //dd($responseData);
         } catch (\Exception $e) {
-            // Handle exception            
+            // Handle exception
             return response()->json(['error' => $e->getMessage()], 500);
         }
-          
-            
-       
 
-        
+
+
+
+
     }
 
 

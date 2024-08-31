@@ -6,12 +6,43 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/createProducts": {
+            "get": {
+                "tags": [
+                    "Bigcommerce"
+                ],
+                "summary": "create Products IN Workdrive",
+                "description": "create Products IN Workdrive",
+                "operationId": "d7e6bb8f35417cdc49eafbd66ca42238",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "API test route works!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/api/uploadFileCsv": {
             "get": {
                 "tags": [
                     "Bigcommerce"
                 ],
-                "summary": "Test API",
+                "summary": "Upload CSV File to Workdrive",
                 "description": "Upload CSV File to Workdrive",
                 "operationId": "a26a1f715fe52a8ba2c4884b9bf1c857",
                 "responses": {

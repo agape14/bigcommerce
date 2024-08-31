@@ -18,17 +18,35 @@ class BigcommerceController extends Controller
 {
 
 
-        
+    /**
+     * @OA\Get(
+     *     path="/api/createProducts",
+     *     summary="create Products IN Workdrive",
+     *     description="create Products IN Workdrive",
+     *     tags={"Bigcommerce"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="API test route works!")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found"
+     *     )
+     * )
+     */
     public function createProductInCrm(Request $request)
     {
-        $serviceCRM = new ZohoCRMService();       
+        $serviceCRM = new ZohoCRMService();
         $record = $serviceCRM->uploadFileCrm();
     }
 
 /**
      * @OA\Get(
      *     path="/api/uploadFileCsv",
-     *     summary="Test API",
+     *     summary="Upload CSV File to Workdrive",
      *     description="Upload CSV File to Workdrive",
      *     tags={"Bigcommerce"},
      *     @OA\Response(

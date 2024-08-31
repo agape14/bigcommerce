@@ -637,6 +637,7 @@ class ComposerStaticInit53a83bad33b29dae6376cea5590ce266
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Providers\\TelescopeServiceProvider' => __DIR__ . '/../..' . '/app/Providers/TelescopeServiceProvider.php',
+        'App\\Services\\ZohoCRMService' => __DIR__ . '/../..' . '/app/Services/ZohoCRMService.php',
         'App\\Services\\ZohoOAuthService' => __DIR__ . '/../..' . '/app/Services/ZohoOAuthService.php',
         'App\\Services\\ZohoWorkdriveService' => __DIR__ . '/../..' . '/app/Services/ZohoWorkdriveService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

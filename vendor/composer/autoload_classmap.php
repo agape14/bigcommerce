@@ -34,6 +34,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Providers\\TelescopeServiceProvider' => $baseDir . '/app/Providers/TelescopeServiceProvider.php',
+    'App\\Services\\ZohoCRMService' => $baseDir . '/app/Services/ZohoCRMService.php',
     'App\\Services\\ZohoOAuthService' => $baseDir . '/app/Services/ZohoOAuthService.php',
     'App\\Services\\ZohoWorkdriveService' => $baseDir . '/app/Services/ZohoWorkdriveService.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
