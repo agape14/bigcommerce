@@ -176,7 +176,7 @@ class ZohoCRMService
 
         $url = 'https://content.zohoapis.com/crm/v6/upload';
         $header_crm = $this->headersUpload();
-        $fileName = 'bigtiny.zip';
+        $fileName = 'tiny2.zip';
         $relativeFilePath = 'public/touploadcrm/' . $fileName; // Ruta relativa dentro de storage/app/public/
         $absoluteFilePath = storage_path('app/' . $relativeFilePath); // Ruta absoluta para acceder al archivo
         //$fields["file"] = fopen($absoluteFilePath, 'rb');
@@ -206,10 +206,14 @@ class ZohoCRMService
             }
 
             try {
+                $productExists = false;//$this->checkIfProductExists($itemNo);
+
+                // Definir operación (insert o update)
+                $operation = $productExists ? 'update' : 'insert';
 
                 $zohoApiUrl = 'https://www.zohoapis.com/crm/bulk/v6/write';
                 $jobData = [
-                    "operation" => "insert",
+                    "operation" => $operation,
                     "ignore_empty" => true,
                     "callBack" => [
                         "url" => "https://sandbox.zohoapis.com/crm/v2/functions/sa_bulk_write_callback/actions/execute?auth_type=apikey&zapikey=1003.cf4f41dc4abb4a1dc38d1486144923c5.ea4bbb3ba57cbc2357d018bf4f3dea28",
@@ -224,8 +228,12 @@ class ZohoCRMService
                             "file_id" => $fileId,
                             "field_mappings" => [
                                 [
-                                    "api_name" => "Product_Code",
+                                    "api_name" => "ITEM_No",
                                     "index" => 0
+                                ],
+                                [
+                                    "api_name" => "MFR_No",
+                                    "index" => 1
                                 ],
                                 [
                                     "api_name" => "Unit_Of_Measure",
@@ -236,8 +244,16 @@ class ZohoCRMService
                                     "index" => 3
                                 ],
                                 [
+                                    "api_name" => "Product_Description",
+                                    "index" => 5
+                                ],
+                                [
+                                    "api_name" => "Manufacturer_Name",
+                                    "index" => 6
+                                ],
+                                [
                                     "api_name" => "bigcommerce_json",
-                                    "index" => 4
+                                    "index" => 26
                                 ]
                             ]
                         ]
@@ -258,15 +274,20 @@ class ZohoCRMService
             // Handle exception
             return response()->json(['error' => $e->getMessage()], 500);
         }
-
-
-
-
-
     }
 
+    function checkIfProductExists($itemNo) {
+        $accessToken = $this->zohoOAuthService->getAccessToken()->access_token;
+        $zohoApiUrl = 'https://www.zohoapis.com/crm/v2/Products/search?criteria=(ITEM_No:equals:' . $itemNo . ')';
+        $response = $this->client->request('GET', $zohoApiUrl, [
+            'headers' => [
+                'Authorization' => 'Zoho-oauthtoken ' . $accessToken
+            ]
+        ]);
 
+        $data = json_decode($response->getBody(), true);
 
-
+        return !empty($data['data']); // Retorna true si el producto ya existe
+    }
 
 }

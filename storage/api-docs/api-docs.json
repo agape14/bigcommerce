@@ -37,6 +37,48 @@
                 }
             }
         },
+        "/api/checkProducts/{id}": {
+            "get": {
+                "tags": [
+                    "Bigcommerce"
+                ],
+                "summary": "Check Products in Workdrive",
+                "description": "Check if a product exists in Workdrive by ID.",
+                "operationId": "a560cf4aa8646f87209a1c639964a19a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the product to check",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product exists."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/api/uploadFileCsv": {
             "get": {
                 "tags": [

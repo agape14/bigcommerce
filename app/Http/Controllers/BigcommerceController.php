@@ -43,6 +43,41 @@ class BigcommerceController extends Controller
         $record = $serviceCRM->uploadFileCrm();
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/checkProducts/{id}",
+     *     summary="Check Products in Workdrive",
+     *     description="Check if a product exists in Workdrive by ID.",
+     *     tags={"Bigcommerce"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="The ID of the product to check",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Product exists.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found"
+     *     )
+     * )
+     */
+    public function checkProducts($id ,Request $request)
+    {
+        $serviceCRM = new ZohoCRMService();
+        $record = $serviceCRM->checkIfProductExists($id);
+        return response()->json($record);
+
+    }
 /**
      * @OA\Get(
      *     path="/api/uploadFileCsv",
