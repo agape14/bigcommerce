@@ -206,14 +206,12 @@ class ZohoCRMService
             }
 
             try {
-                $productExists = false;//$this->checkIfProductExists($itemNo);
-
-                // Definir operación (insert o update)
-                $operation = $productExists ? 'update' : 'insert';
+                //$productExists = false;//$this->checkIfProductExists($itemNo);
+                //$operation = $productExists ? 'update' : 'insert';
 
                 $zohoApiUrl = 'https://www.zohoapis.com/crm/bulk/v6/write';
                 $jobData = [
-                    "operation" => $operation,
+                    "operation" => 'upsert',
                     "ignore_empty" => true,
                     "callBack" => [
                         "url" => "https://sandbox.zohoapis.com/crm/v2/functions/sa_bulk_write_callback/actions/execute?auth_type=apikey&zapikey=1003.cf4f41dc4abb4a1dc38d1486144923c5.ea4bbb3ba57cbc2357d018bf4f3dea28",
